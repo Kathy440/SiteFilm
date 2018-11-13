@@ -21,12 +21,14 @@ import { ErreurComponent } from './erreur/erreur.component';
 const appRoutes: Routes = [
     { path: 'auth/signup', component: SignupComponent },
     { path: 'auth/signin', component: SigninComponent },
-    { path: 'movies', component: MovieListComponent }, 
-    { path: 'movies/new', component: MovieFormComponent },
-    { path: 'movies/view', component: SingleMovieComponent },//Modifier le film avec id
-    { path: 'edit', component: EditMovieComponent },
-    //{ path: 'erreur', component: ErreurComponent },
-    //{ path: '**', redirectTo: '/erreur'}
+    { path: 'movies', canActivate: [AuthGuardService], component: MovieListComponent }, 
+    { path: 'movies/new', canActivate: [AuthGuardService], component: MovieFormComponent },
+    { path: 'movies/view/:id', canActivate: [AuthGuardService], component: SingleMovieComponent },//Modifier le film avec id
+    { path: 'edit', canActivate: [AuthGuardService], component: EditMovieComponent },
+    { path: '', redirectTo: 'movies', pathMatch: 'full' },
+    //{ path: '**', redirectTo: 'movies'},
+    { path: 'not-found', component: ErreurComponent },
+    { path: '**', redirectTo: 'not-found'}
 ];
 
 
@@ -39,7 +41,8 @@ const appRoutes: Routes = [
     MovieListComponent,
     SingleMovieComponent,
     MovieFormComponent,
-    EditMovieComponent
+    EditMovieComponent,
+    ErreurComponent
   ],
   imports: [
     BrowserModule,

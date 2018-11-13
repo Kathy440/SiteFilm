@@ -3,7 +3,7 @@ export class Movie {
     image: string;
     loveIts: number;
     dontLoveIts: number;
-    constructor(public title: string, author: string, type: string) {
+    constructor(public title: string, public author: string, public type: string) {
 
     }
 }

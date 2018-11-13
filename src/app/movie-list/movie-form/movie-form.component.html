@@ -1,3 +1,39 @@
-<p>
-  movie-form works!
-</p>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <h2>Enregistrer un nouveau Film</h2>
+    <form [formGroup]="movieForm" (ngSubmit)="onSaveMovie()">
+      <div class="form-group">
+        <label for="title">Titre Du Film</label>
+        <input type="text"
+               id="title"
+               class="form-control" formControlName="title"
+               placeholder="Entrer le titre du film">
+      </div>
+      <div class="form-group">
+        <label for="type">Genre Du Film</label>
+        <input type="text"
+               id="type"
+               class="form-control" formControlName="type"
+               placeholder="Entrer le genre du Film">
+      </div>
+      <div class="form-group">
+        <label for="author">Acteurs ou Réalisateurs</label>
+        <input type="text"
+               id="author"
+               class="form-control" formControlName="author"
+               placeholder="Entrer le réalisateurs ou les acteurs">
+      </div>
+      <div class="form-group">
+        <label for="synopsis">Synopsis</label>
+        <textarea id="synopsis" 
+                  class="form-control" 
+                  formControlName="synopsis"
+                  placeholder="Mise en bouche du film">
+        </textarea>
+      </div>
+      <button class="btn btn-success" 
+              
+              type="submit">Enregistrer</button>
+    </form>
+  </div>
+</div>
