@@ -17,6 +17,8 @@ import { MoviesService } from './services/movies.service';
 import { Routes, RouterModule } from '@angular/router';
 import { EditMovieComponent } from './edit-movie/edit-movie.component';
 import { ErreurComponent } from './erreur/erreur.component';
+import { MovieSearchComponent } from './movie-search/movie-search.component';
+import { omdbService } from './services/omdb-service';
 
 const appRoutes: Routes = [
     { path: 'auth/signup', component: SignupComponent },
@@ -25,6 +27,7 @@ const appRoutes: Routes = [
     { path: 'movies/new', canActivate: [AuthGuardService], component: MovieFormComponent },
     { path: 'movies/view/:id', canActivate: [AuthGuardService], component: SingleMovieComponent },//Modifier le film avec id
     { path: 'edit', canActivate: [AuthGuardService], component: EditMovieComponent },
+    { path: 'search-movie', canActivate: [AuthGuardService], component: MovieSearchComponent },
     { path: '', redirectTo: 'movies', pathMatch: 'full' },
     //{ path: '**', redirectTo: 'movies'},
     { path: 'not-found', component: ErreurComponent },
@@ -42,7 +45,8 @@ const appRoutes: Routes = [
     SingleMovieComponent,
     MovieFormComponent,
     EditMovieComponent,
-    ErreurComponent
+    ErreurComponent,
+    MovieSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,8 @@ const appRoutes: Routes = [
   providers: [
     AuthService,
     AuthGuardService,
-    MoviesService
+    MoviesService,
+    omdbService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import  * as firebase from 'firebase'
+import { omdbService } from '../services/omdb-service';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +10,21 @@ import  * as firebase from 'firebase'
 })
 export class HeaderComponent implements OnInit {
 
+  movieTitle;
   isAuth: boolean;
+  movies = [
+    {title: 'Blade Runner 2049'},
+    {title: 'Avatar'},
+    {title: 'Harry Potter'},
+    {title: 'Terminator'},
+    {title: 'Annabelle'},
+    {title: 'Conjuring'},
+    {title: 'Mulan'}
 
-  constructor(private authService: AuthService) { }
+  ];
+
+  constructor(private authService: AuthService,
+              private omdbService: omdbService) { }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged(
@@ -28,5 +41,11 @@ export class HeaderComponent implements OnInit {
   onSignOut() {
     this.authService.signOutUser();
   }
+
+  /*searchForMovie(movieTitle) {
+    this.omdbService.findMoviesByTitle(movieTitle)
+      .then(res => this.movies = res.Search);
+  }
+*/
 
 }

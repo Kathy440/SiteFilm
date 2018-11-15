@@ -1,0 +1,40 @@
+<br>
+<h2>Films </h2>
+
+<!--Bar de recherche recherche un film
+<input [(ngModel)]="movieTitle" placeholder="title"/>
+<button (click)="searchForMovie(movieTitle)">Serach </button>
+
+<ul>
+    <li (click)="findMovieDetails(movie)" *ngFor="let movie of movies">
+        {{movie.Title}} 
+        <img src="{{movie.Poster}}" alt=""> 
+    </li>
+</ul>
+
+Detail au click sur le film
+<h3>{{details.Title}}</h3>
+<h5>{{details.Genre}} | {{details.Released}}</h5>
+<p> {{details.Plot}} </p>
+<img src=" {{details.Poster}}"/>
+-->
+
+<div class="input-group">   
+    <input [(ngModel)]="keyword" 
+            class="form-control" placeholder="Titre du film">
+    <div class="input-group-append">
+        <button (click)="search(keyword)" class="btn btn-outline-primary">
+            Recherche
+        </button>
+    </div>
+</div>
+<br>
+<h2>Résultats de votre recherche </h2>
+<br>
+    <li *ngFor="let movie of movies"
+        class="list-group-item">
+        {{movie.Title}} 
+        <div class="pull-right"> 
+            <img src="{{movie.Poster}} " alt="">
+        </div>
+    </li>
