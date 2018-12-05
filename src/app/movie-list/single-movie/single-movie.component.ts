@@ -19,7 +19,7 @@ export class SingleMovieComponent implements OnInit {
 
   
   ngOnInit() {
-    this.movie = new Movie('', '', '');
+    this.movie = new Movie('', '', '', '');
     const id = this.route.snapshot.params['id'];
     this.moviesService.getSingleMovies(+id).then(
       (movie: Movie) => {

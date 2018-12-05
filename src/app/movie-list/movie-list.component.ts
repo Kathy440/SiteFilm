@@ -38,8 +38,14 @@ export class MovieListComponent implements OnInit {
     this.router.navigate(['/movies', 'view', id]);
   }
 
+  onEditMovie(id: number) {
+    this.router.navigate(['/edit', 'view', id]);
+  }
+
   ngOnDestroy() {
     this.moviesSubcription.unsubscribe();
   }
+
+
 
 }

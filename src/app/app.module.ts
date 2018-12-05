@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -19,6 +23,9 @@ import { EditMovieComponent } from './edit-movie/edit-movie.component';
 import { ErreurComponent } from './erreur/erreur.component';
 import { MovieSearchComponent } from './movie-search/movie-search.component';
 import { omdbService } from './services/omdb-service';
+import { FooterComponent } from './footer/footer.component';
+import { MovieComponent } from './movie/movie.component';
+import { from } from 'rxjs';
 
 const appRoutes: Routes = [
     { path: 'auth/signup', component: SignupComponent },
@@ -26,7 +33,7 @@ const appRoutes: Routes = [
     { path: 'movies', canActivate: [AuthGuardService], component: MovieListComponent }, 
     { path: 'movies/new', canActivate: [AuthGuardService], component: MovieFormComponent },
     { path: 'movies/view/:id', canActivate: [AuthGuardService], component: SingleMovieComponent },//Modifier le film avec id
-    { path: 'edit', canActivate: [AuthGuardService], component: EditMovieComponent },
+    { path: 'edit/view/:id', canActivate: [AuthGuardService], component: EditMovieComponent },
     { path: 'search-movie', canActivate: [AuthGuardService], component: MovieSearchComponent },
     { path: '', redirectTo: 'movies', pathMatch: 'full' },
     //{ path: '**', redirectTo: 'movies'},
@@ -46,7 +53,9 @@ const appRoutes: Routes = [
     MovieFormComponent,
     EditMovieComponent,
     ErreurComponent,
-    MovieSearchComponent
+    MovieSearchComponent,
+    FooterComponent,
+    MovieComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +63,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

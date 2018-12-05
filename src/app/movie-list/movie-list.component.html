@@ -1,22 +1,48 @@
+<div class="container">
 <div class="row">
-  <div class="col-xs-12">
-    <h2>Vos Films</h2>
+  <div class="col-md-12">
+    <h2 class="titre_film">Vos Films</h2>
     <div class="list-group">
-      <button class="list-goup-item"
-              *ngFor="let movie of movies; let i = index"
-              (click)="onViewMovie(i)"> 
+      <ul>
+        <li 
+            *ngFor="let movie of movies; let i = index"
+            class="list-group-item">
+      
               <h3 class="list-group-item-heading">
                 {{ movie.title }} 
-                <button class="btn btn-default pull-right"
-                        (click)="onDeleteMovie(movie)">
-                        <span class="glyphicon glyphicon-minus"></span>
+                <button class="btn btn-danger pull-right"
+                        (click)="onDeleteMovie(movie)">Suprimer
                 </button>
               </h3>
-              <p class="list-group-item-text">{{ movie.author }}</p>
-              <p>{{ movie.type }}</p>
-          </button>
-      
+
+              <div class="test">
+              <img  style="width:200px"
+                    src="{{movie.Poster}}" 
+                    alt="jaquette_de_film">
+
+              </div>
+              <button (click)="onViewMovie(i)"
+                        type="button" 
+                        class="btn btn-outline-info test_bouton">Voir les détails du film
+              </button>
+
+              <button (click)="onEditMovie(i)"
+                        type="button" 
+                        class="btn btn-outline-info test_bouton">Modifier
+              </button>
+              <span class="badge">
+                <a href="edit/view/:id" class="edit" ng-click="edit(item)">[ Edit ]</a></span>
+        </li>
+       </ul>
+       
     </div>
-    <button class="btn btn-outline-success" (click)="onNewMovie()">Nouveau Film</button>
+    
   </div>
+</div>
+
+<div class="bouton_new">
+  <button class="btn btn-outline-success" 
+        (click)="onNewMovie()">Nouveau Film</button>
+</div>       
+
 </div>

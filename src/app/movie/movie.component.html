@@ -1,0 +1,7 @@
+<ul class="list-group">
+    <app-movie-search *ngFor= "let movie of movies; let i = index"
+                      [loveIts]="movie.loveIts"
+                      [index]=i>
+        
+    </app-movie-search>
+</ul>

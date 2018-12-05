@@ -4,6 +4,7 @@ import { MoviesService } from 'src/app/services/movies.service';
 import { Router } from '@angular/router';
 import { Movie } from 'src/app/models/movie.model';
 
+
 @Component({
   selector: 'app-movie-form',
   templateUrl: './movie-form.component.html',
@@ -12,6 +13,9 @@ import { Movie } from 'src/app/models/movie.model';
 export class MovieFormComponent implements OnInit {
 
   movieForm: FormGroup;
+  fileIsUploading = false;
+  fileUrl: string;
+  fileUploaded = false;
 
   constructor(private formBuilder: FormBuilder,
               private moviesService: MoviesService,
@@ -36,13 +40,32 @@ export class MovieFormComponent implements OnInit {
     const author = this.movieForm.get('author').value;
     const synopsis = this.movieForm.get('synopsis').value;
 
-    const newMovie = new Movie(title, author, type);
+    const newMovie = new Movie(title, author, type, synopsis);
     newMovie.synopsis = synopsis;
     newMovie.author = author;
     newMovie.type = type;
+
+    if(this.fileUrl && this.fileUrl !=='') {
+      newMovie.Poster = this.fileUrl;
+    }
     
     this.moviesService.createNewMovie(newMovie);
     this.router.navigate(['/movies']);
+  }
+
+  onUploadFile(file: File) {
+    this.fileIsUploading = true;
+    this.moviesService.uploadFile(file).then(
+      (url: string) => {
+        this.fileUrl = url;
+        this.fileIsUploading = false;
+        this.fileUploaded = true;
+      }
+    );
+  }
+
+  detectFiles(event) {
+    this.onUploadFile(event.target.files[0]);
   }
 
 }

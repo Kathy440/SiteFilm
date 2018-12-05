@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import { Movie } from '../models/movie.model';
 import { Subject } from 'rxjs';
 import * as firebase from 'firebase';
-import { reject } from 'q';
+import firestore from 'firebase/firestore';
+//import { AngularFirestore } from '@angular/fire/firestore';
+//import firestone from 'firebase/firestore'
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoviesService {
+
+  ref = firebase.firestore().collection('movies');
 
   movies: Movie[] = [];
   moviesSubject = new Subject<Movie[]>();
@@ -15,6 +20,8 @@ export class MoviesService {
   constructor() { 
     this.getMovies();
   }
+
+  
 
   //méthode pour pouvoir acceder la liste des films
   emitMovies() {
@@ -68,5 +75,65 @@ export class MoviesService {
     this.saveMovies();
     this.emitMovies();
   }
+
+  /*addFavoriteMovie(movie: Movie) {
+    if(movie.loveIts) {
+      movie.loveIts = movie.loveIts + 1;
+    } 
+    
+    this.saveMovies();
+    this.emitMovies();
+    
+    return movie.loveIts
+  } 
+  */
+ 
+  uploadFile(file: File) {
+    return new Promise(
+      (resolve, reject) => {
+        const almostUniqueFileName = Date.now().toString();
+        const upload = firebase.storage().ref()
+          .child('images/' + almostUniqueFileName + file.name).put(file);
+        upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {
+            console.log('Chargement...');
+          },
+          (error) => {
+            console.log('Erreur de chargement ! : '+ error);
+            reject();
+          },
+          () => {
+            resolve(upload.snapshot.ref.getDownloadURL());
+          }
+        );
+      }
+    );
+  }
+
+  updateMovie(movie: Movie) {
+    
+  }
+
+  addMovie(title: string, type: string, author: string, synopsis: string,
+            Poster: string ) {
+              const movieObject = {
+                id:0,
+                title: '',
+                type: '',
+                author: '',
+                synopsis: '',
+                Poster: ''
+                
+              };
+              movieObject.title = title;
+              movieObject.type = type;
+              movieObject.author = author;
+              movieObject.synopsis = synopsis;
+              movieObject.Poster = Poster;
+              
+
+              this.movies.push(movieObject);
+              this.emitMovies();
+            }
 
 }

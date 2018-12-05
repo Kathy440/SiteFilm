@@ -1,6 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { omdbService } from '../services/omdb-service';
 import { OmdbMovie } from '../models/omdb-movie.movie'
+import { MoviesService } from '../services/movies.service';
+import { Movie } from '../models/movie.model';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+//import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
+
 
 
 
@@ -25,19 +33,35 @@ export class MovieSearchComponent implements OnInit {
   ];
   */
 
-  constructor(private omdbService: omdbService) { }
+  allMovie: Movie [];
 
+  constructor(private omdbService: omdbService,
+              private movieService: MoviesService,
+              private router: Router,
+              private http: HttpClient) { }
+
+              
+  @Input() loveIts: number;
+  @Input() index : number;
+
+  movie = {};
   movies: OmdbMovie[];
+  
 
   keyword = '';
+  ratings = {};
 
   search = (title) => {
-    //alert('Recherche en cours du film ' + title); sert a faire appraaitre le pop-up 
+    //alert('Recherche en cours du film ' + title); //sert a faire apparaître le pop-up 
     this.omdbService.findMoviesByKeyword(title)
     //pour accèder à l'array Search contient l'array movies
       .then(response => this.movies = response.Search);
   
     }
+
+    details = imdbId =>
+      this.omdbService.findMoviesByImdbId(imdbId)
+        .then(movie => this.movie = movie)
 
   /*searchForMovie(movieTitle) {
     this.omdbService.findMoviesByTitle(movieTitle)
@@ -54,9 +78,20 @@ export class MovieSearchComponent implements OnInit {
   }
   */
 
- ngOnInit() {
+    like = movie =>
+      console.log(movie);
+
+
+   /* addFavorie() {
+      this.movieService.addFavoriteMovie(this.movieService.movies[this.index])
+      this.router.navigate(['movies']);
+    }
+
+*/
+
+ngOnInit() {
   
-  }
+}
 
 }
 

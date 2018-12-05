@@ -1,6 +1,8 @@
 <br>
-<h2>Films </h2>
-
+<div class="row">
+    <div class="col-12">
+        <h2>Films </h2>
+        <br>
 <!--Bar de recherche recherche un film
 <input [(ngModel)]="movieTitle" placeholder="title"/>
 <button (click)="searchForMovie(movieTitle)">Serach </button>
@@ -18,23 +20,76 @@ Detail au click sur le film
 <p> {{details.Plot}} </p>
 <img src=" {{details.Poster}}"/>
 -->
-
-<div class="input-group">   
-    <input [(ngModel)]="keyword" 
-            class="form-control" placeholder="Titre du film">
-    <div class="input-group-append">
-        <button (click)="search(keyword)" class="btn btn-outline-primary">
-            Recherche
-        </button>
-    </div>
-</div>
-<br>
-<h2>Résultats de votre recherche </h2>
-<br>
-    <li *ngFor="let movie of movies"
-        class="list-group-item">
-        {{movie.Title}} 
-        <div class="pull-right"> 
-            <img src="{{movie.Poster}} " alt="">
+            <div class="input-group">   
+                <input [(ngModel)]="keyword" 
+                        class="form-control" placeholder="Titre du film">
+                <div class="input-group-append">
+                    <button (click)="search(keyword)" class="btn btn-outline-primary">
+                     Recherche
+                    </button>
+                </div>
+            </div>
+            <br>
+            <h2>Résultats de votre recherche </h2>
         </div>
+<br>
+
+<div class="row">   
+    <div class="col-6"> 
+<ul>
+    <!--like(movie)-->
+    <li (click)="details(movie.imdbID)"
+        *ngFor="let movie of movies"
+        class="list-group-item">
+        <h2>{{movie.Title}} </h2>
+    <i (click)="addFavorie()" 
+        class="fa fa-star float-right">
+    </i>
+        <img src="{{movie.Poster}} "  class="img_jaquette">
+        <div *ngIf="!movie.Poster"><br>Désoler nous n'avons pas de Jaquette de film pour ce film </div>
+    
     </li>
+    
+</ul> 
+
+<input type="text" [(ngModel)]="newItem" (keydown.enter)="add()" placeholder="item to add" />
+    <ul>
+        <li *ngFor="let movie of movies | async">
+            <button (click)="favorite(movie.$value)">[fav]</button>
+            <button (click)="delete(movie)">[x]</button>
+        </li>
+    </ul>
+</div>    
+
+
+
+
+
+<div class="col-6">
+    <h2>{{movie.Title}}  <br> {{movie.Released}} </h2>
+
+    <img src="{{movie.Poster}}"/> 
+    <br>
+    <p>
+        {{movie.Plot}}
+       <br> Note imdb: {{movie.imdbRating}} 
+        <!--{{movie.imdbVotes}}-->
+    </p>
+
+    
+</div>
+</div> 
+
+
+<div class="alert alert-dark" role="alert">
+    Tu n'a pas trouver ton film ?  <a routerLink="/movies/new" class="alert-link">Ajoute le !</a> Ajoute le !
+</div>
+
+
+<!-- <a  id="return-to-top" class="scrollToTop">
+            <i class="fas fa-4x fa-angle-up"> </i>
+           
+    </a>
+-->      
+    
+
